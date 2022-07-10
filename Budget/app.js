@@ -96,6 +96,13 @@ let BudgetController = (function() {
                 percentage: data.percentage
 
             }
+        },
+        deleteItem: function(type, id){
+            let ids, index;
+            ids = data.allItems[type].map(function(current){
+                return current.id;
+            });
+            index = ids.indexOf(id);
         }
     }
 })();
