@@ -99,10 +99,18 @@ let BudgetController = (function() {
         },
         deleteItem: function(type, id){
             let ids, index;
+            //we use the map function as it returns a new array with the ids data we are interested in
             ids = data.allItems[type].map(function(current){
                 return current.id;
             });
+            //here we use the indexOf to give us the index position of the id passed on the array
             index = ids.indexOf(id);
+            if(index !== -1){
+                //here we use the splice method which will help remove the element with the index from the array
+                /*the splice method has two parameters, the first is the index we want to remove and the second
+                is how many elements we want to remove*/
+                data.allItems[type].splice(index, 1);
+            }
         }
     }
 })();
@@ -187,6 +195,11 @@ let UIController = (function() {
             } else {
                 document.querySelector(DOMInputs.percentageValue).textContent = '---';
             }
+        }, 
+        removeItemUI: function(selectorID){
+            //to remove element we will pass the child also which is same as the id we will be ap
+            let x = document.getElementById(selectorID);
+            x.parentNode.removeChild(x);
         }
     }
 })();
@@ -212,18 +225,27 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
         /*we will use event delegation to achieve this and thus we will pick a parent node that shelves the income
         and expense*/
         document.querySelector(DOM.container).addEventListener('click', function(event) {
-            let itemID, splitID;
+            let itemID, splitID, type, ID;
             // by using the parentNode, we are able to traverse up to the parent node where we are able to fetch the id
             itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
             
             if(itemID){
                 // we will then use a splice to further explore into the id and fetch the digit value
                 splitID = itemID.split('-');
-                console.log(splitID[1]);
-            }
-            console.log(itemID);
+                type = splitID[0];
+                ID = parseInt(splitID[1]);
+                
+                //here we pass our delete method from the budget controller that remove item from array
+                budgetCtrl.deleteItem(type, ID);
 
-        })
+                //here we remove the item from UI
+                UICtrl.removeItemUI(itemID);
+
+                //update Budget
+                calculateBudget();
+            }
+
+        });
     }
 
     let calculateBudget = function(){
