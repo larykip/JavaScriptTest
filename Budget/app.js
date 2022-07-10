@@ -214,6 +214,7 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
                 splitID = itemID.split('-');
                 console.log(splitID[1]);
             }
+            console.log(itemID);
 
         })
     }
