@@ -13,6 +13,22 @@ let BudgetController = (function() {
         this.id = id;
         this.description = description;
         this.value = value
+        //here we create a percentage method and set the default to -1 but the real calculation will be on the method
+        this.percentage = -1
+    }
+
+    //we create a percentage method using the array prototype
+    Expense.prototype.percentageCalculator = function(totalInc){
+        if(totalInc > 0){
+            this.percentage = Math.round((this.value / totalInc) * 100);
+        } else {
+            this.percentage = -1;
+        }
+    }
+
+    //we create another method which will return the percentage
+    Expense.prototype.retPercentage = function(){
+        return this.percentage;
     }
 
     let myCalculator = function(type){
@@ -111,7 +127,20 @@ let BudgetController = (function() {
                 is how many elements we want to remove*/
                 data.allItems[type].splice(index, 1);
             }
-        }
+        },
+        percentCalculator: function(){
+            data.allItems.exp.forEach(function(curr){
+                curr.percentageCalculator(data.total.inc);
+            });
+        },
+
+        getPercent: function(){
+            let valStore;
+            valStore = data.allItems.exp.map(function(cur){
+                return cur.retPercentage();
+            });
+            return valStore;
+        },
     }
 })();
 
@@ -238,6 +267,17 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
         UICtrl.displayBudget(myBudget);
     }
 
+    let calculatePercentage = function(){
+        //here we call the expense percent calculator
+        budgetCtrl.percentCalculator();
+
+        //here we return the individual expenses percentage
+        let percent = budgetCtrl.getPercent();
+
+        //here we pass the percentages to the UI
+        console.log(percent);
+    }
+
     //we create an add item key function
     //this function will allow to events, 1: by clicking the button 2: By pressing the enter button
     let addItemEvnt = function() {
@@ -259,6 +299,9 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
             UICtrl.clearInputFields();
             //here we calculate & display the budget each time the item is added
             calculateBudget();
+
+            //here we update expense percentage after adding items
+            calculatePercentage();
         }
 
         
@@ -283,6 +326,9 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
 
             //update Budget
             calculateBudget();
+
+            //here we update expense percentage after deleting items
+            calculatePercentage();
         }
 
     }
