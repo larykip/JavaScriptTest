@@ -224,28 +224,7 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
         //here we do a delete event for either income or expense list
         /*we will use event delegation to achieve this and thus we will pick a parent node that shelves the income
         and expense*/
-        document.querySelector(DOM.container).addEventListener('click', function(event) {
-            let itemID, splitID, type, ID;
-            // by using the parentNode, we are able to traverse up to the parent node where we are able to fetch the id
-            itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
-            
-            if(itemID){
-                // we will then use a splice to further explore into the id and fetch the digit value
-                splitID = itemID.split('-');
-                type = splitID[0];
-                ID = parseInt(splitID[1]);
-                
-                //here we pass our delete method from the budget controller that remove item from array
-                budgetCtrl.deleteItem(type, ID);
-
-                //here we remove the item from UI
-                UICtrl.removeItemUI(itemID);
-
-                //update Budget
-                calculateBudget();
-            }
-
-        });
+        document.querySelector(DOM.container).addEventListener('click', deleteItemEvnt);
     }
 
     let calculateBudget = function(){
@@ -283,6 +262,29 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
         }
 
         
+    }
+
+    let deleteItemEvnt = function(event) {
+        let itemID, splitID, type, ID;
+        // by using the parentNode, we are able to traverse up to the parent node where we are able to fetch the id
+        itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        
+        if(itemID){
+            // we will then use a splice to further explore into the id and fetch the digit value
+            splitID = itemID.split('-');
+            type = splitID[0];
+            ID = parseInt(splitID[1]);
+            
+            //here we pass our delete method from the budget controller that remove item from array
+            budgetCtrl.deleteItem(type, ID);
+
+            //here we remove the item from UI
+            UICtrl.removeItemUI(itemID);
+
+            //update Budget
+            calculateBudget();
+        }
+
     }
 
 
