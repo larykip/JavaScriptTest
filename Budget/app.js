@@ -156,7 +156,8 @@ let UIController = (function() {
         incomeValue: '.budget__income--value',
         expenseValue: '.budget__expenses--value',
         percentageValue: '.budget__expenses--percentage',
-        container: '.container'
+        container: '.container',
+        expensePercentage: '.item__percentage'
     
     }
 
@@ -229,6 +230,29 @@ let UIController = (function() {
             //to remove element we will pass the child also which is same as the id we will be ap
             let x = document.getElementById(selectorID);
             x.parentNode.removeChild(x);
+        },
+
+        getExpensePercentage: function(percentage){
+            let fields
+            //here we will first select and list all our expense items by the percentage 
+            fields = document.querySelectorAll(DOMInputs.expensePercentage);
+
+            //here we will initialize a nodeList function that will loop over the list of expense items
+
+            let nodeListForEach = function(list, callback){
+                //we will loop through the list and displaying each item with its index in the array
+                for(x = 0; x < list.length; x++){
+                    callback(list[x], x);
+                }
+            }
+
+            nodeListForEach(fields, function(curr, index){
+                if(percentage[index] > 0){
+                    curr.textContent = percentage[index] + '%'
+                } else {
+                    curr.textContent = '---';
+                }
+            });
         }
     }
 })();
@@ -275,6 +299,7 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
         let percent = budgetCtrl.getPercent();
 
         //here we pass the percentages to the UI
+        UICtrl.getExpensePercentage(percent);
         console.log(percent);
     }
 
