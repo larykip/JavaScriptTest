@@ -161,6 +161,27 @@ let UIController = (function() {
     
     }
 
+    let numberFormater = function(number, type){
+        let num, int, numSplit, dec;
+        //here we will use the standard 2dp numbering system
+        //first we will use the Math.abs function
+        num = Math.abs(number);
+        num = num.toFixed(2);
+
+        //here we are going to split a number so that we can establish if it's a whole number or a decimal
+        numSplit = num.split('.')
+        // by using . to split, the element at index 0 is a whole number and the element at index 1 is a decimal
+        int = numSplit[0];
+        
+        //this if condition checks if the integer has a length of more than 3 (1000 and above)
+        if(int.length > 3){
+            int = int.substr(0, int.length -3) + ',' + int.substr(int.length-3, 3);
+        }
+        dec = numSplit[1];
+        //we pass ternary function that will help as put a plus for income and - for expenses
+        return (type === 'inc' ? '+' : '-') + ' ' + int + '.' + dec;
+    }
+
     return {
         getInput: function(){
             return {
@@ -191,7 +212,7 @@ let UIController = (function() {
             //we replace the placeholders with the values
             newHtml = html.replace('%id%', obj.id);
             newHtml = newHtml.replace('%description%', obj.description);
-            newHtml = newHtml.replace('%value%', obj.value);
+            newHtml = newHtml.replace('%value%', numberFormater(obj.value, type));
 
             //we insert the html into the DOM
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
@@ -217,9 +238,13 @@ let UIController = (function() {
         },
 
         displayBudget: function(obj){
-            document.querySelector(DOMInputs.budgetValue).textContent = obj.budget;
-            document.querySelector(DOMInputs.incomeValue).textContent = obj.income;
-            document.querySelector(DOMInputs.expenseValue).textContent = obj.expense;
+            if(obj.budget >= 0){
+                document.querySelector(DOMInputs.budgetValue).textContent = '+' + obj.budget.toFixed(2)
+            } else {
+                document.querySelector(DOMInputs.budgetValue).textContent = obj.budget.toFixed(2)
+            }
+            document.querySelector(DOMInputs.incomeValue).textContent = numberFormater(obj.income, 'inc');
+            document.querySelector(DOMInputs.expenseValue).textContent = (numberFormater(obj.expense, 'exp'));
             if(obj.percentage > 0){
                 document.querySelector(DOMInputs.percentageValue).textContent = obj.percentage + '%';
             } else {
