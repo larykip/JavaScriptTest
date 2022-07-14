@@ -290,11 +290,10 @@ let UIController = (function() {
 
             //this is just my style of getting the st, nd, rd of th for date
             let conv = Math.abs(date);
-            conv = conv.toFixed(conv);
+            conv = conv.toFixed(2);
             let sd = conv.split('.');
             let x = sd[0][1];
             let y = parseInt(x);
-            console.log(typeof(x));
             if (y === 1){
                 z = 'st'
             } else if(y === 2){
@@ -306,6 +305,20 @@ let UIController = (function() {
             }
             document.querySelector(DOMInputs.dateLabel).textContent = date + z + ' ' + monthArr[month] + ' ' + year;
 
+        },
+        changedType: function(){
+            //here we first list all the tags we want to change color when we select the expense mode
+            let fields = document.querySelectorAll(DOMInputs.inputType+','+DOMInputs.inputDescription +','+ DOMInputs.inputValue +','+DOMInputs.inputButton);
+
+            //here we create a function that loops over the node
+            let nodeListLoop = function(list, callback ){
+                for(x = 0; x < list.length; x++){
+                    callback(list[x], x);
+                }
+            }
+            nodeListLoop(fields, function(cur){
+                cur.classList.toggle('red-focus');
+            });
         }
     }
 })();
@@ -331,6 +344,8 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
         /*we will use event delegation to achieve this and thus we will pick a parent node that shelves the income
         and expense*/
         document.querySelector(DOM.container).addEventListener('click', deleteItemEvnt);
+
+        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
     }
 
     let calculateBudget = function(){
