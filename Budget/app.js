@@ -157,7 +157,8 @@ let UIController = (function() {
         expenseValue: '.budget__expenses--value',
         percentageValue: '.budget__expenses--percentage',
         container: '.container',
-        expensePercentage: '.item__percentage'
+        expensePercentage: '.item__percentage',
+        dateLabel: '.budget__title--month'
     
     }
 
@@ -278,6 +279,33 @@ let UIController = (function() {
                     curr.textContent = '---';
                 }
             });
+        },
+        displayDate: function(){
+            let now, date, month, year, monthArr, z;
+            now = new Date();
+            date = now.getDate();
+            month = now.getMonth();
+            year = now.getFullYear();
+            monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+            //this is just my style of getting the st, nd, rd of th for date
+            let conv = Math.abs(date);
+            conv = conv.toFixed(conv);
+            let sd = conv.split('.');
+            let x = sd[0][1];
+            let y = parseInt(x);
+            console.log(typeof(x));
+            if (y === 1){
+                z = 'st'
+            } else if(y === 2){
+                z= 'nd'
+            } else if(y === 3){
+                z = 'rd'
+            } else{
+                z = 'th'
+            }
+            document.querySelector(DOMInputs.dateLabel).textContent = date + z + ' ' + monthArr[month] + ' ' + year;
+
         }
     }
 })();
@@ -391,7 +419,9 @@ let BridgeController = (function(budgetCtrl, UICtrl) {
                 income: 0,
                 expense: 0,
                 budget: 0,
-                percentage: 0})
+                percentage: 0});
+            UICtrl.displayDate();
+    
         }
     }
 
