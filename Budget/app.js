@@ -319,6 +319,7 @@ let UIController = (function() {
             nodeListLoop(fields, function(cur){
                 cur.classList.toggle('red-focus');
             });
+            document.querySelector(DOMInputs.inputButton).classList.toggle('red');
         }
     }
 })();
