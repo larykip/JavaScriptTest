@@ -8,12 +8,12 @@ let myData = [4, 13, 28, 35, 7];
 //     console.log(cur + ' index is: ' + ind + '  ' + arr);
 // });
 
-// monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 // let now = new Date();
 // let month = now.getMonth();
 // //console.log(month);
 // console.log(monthArr[month]);
-let z
+/*let z
 int = 43;
 let conv = Math.abs(int);
 conv = conv.toFixed(conv);
@@ -30,4 +30,9 @@ if (y === 1){
 } else{
     z = 'th'
 }
-console.log(z);
+console.log(z); */
+
+//for of loop
+for(let el of monthArr){
+    console.log(el);
+}
