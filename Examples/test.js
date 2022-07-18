@@ -8,7 +8,7 @@ let myData = [4, 13, 28, 35, 7];
 //     console.log(cur + ' index is: ' + ind + '  ' + arr);
 // });
 
-monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+//monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 // let now = new Date();
 // let month = now.getMonth();
 // //console.log(month);
@@ -33,6 +33,30 @@ if (y === 1){
 console.log(z); */
 
 //for of loop
-for(let el of monthArr){
-    console.log(el);
+// for(let el of monthArr){
+//     console.log(el);
+// }
+
+//JavaScript ES6 Map
+
+let trivia = new Map();
+trivia.set('question', 'Who was the frist president of Kenya?');
+trivia.set(1, 'Mwai Kibaki.');
+trivia.set(2, 'Jomo Kenyatta.');
+trivia.set(3, 'Daniel Moi.');
+trivia.set(4, 'Uhuru Kenyatta.');
+trivia.set('answer', 2);
+trivia.set('correct', 'Congratulations. You are a pro!');
+trivia.set('incorrect', 'Sorry. Please try again!');
+console.log(trivia.get('question'));
+for(let [key, value] of trivia.entries()){
+    if(typeof(key) === 'number'){
+        console.log(`${key}: ${value}`);
+    }
+}
+let myAns = parseInt(prompt('Enter the correct answer:'));
+if(myAns === trivia.get('answer')){
+    console.log(trivia.get('correct'));
+} else{
+    console.log(trivia.get('incorrect'));
 }
