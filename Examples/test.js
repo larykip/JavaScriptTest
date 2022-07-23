@@ -39,24 +39,34 @@ console.log(z); */
 
 //JavaScript ES6 Map
 
-let trivia = new Map();
-trivia.set('question', 'Who was the frist president of Kenya?');
-trivia.set(1, 'Mwai Kibaki.');
-trivia.set(2, 'Jomo Kenyatta.');
-trivia.set(3, 'Daniel Moi.');
-trivia.set(4, 'Uhuru Kenyatta.');
-trivia.set('answer', 2);
-trivia.set('correct', 'Congratulations. You are a pro!');
-trivia.set('incorrect', 'Sorry. Please try again!');
-console.log(trivia.get('question'));
-for(let [key, value] of trivia.entries()){
-    if(typeof(key) === 'number'){
-        console.log(`${key}: ${value}`);
+// let trivia = new Map();
+// trivia.set('question', 'Who was the frist president of Kenya?');
+// trivia.set(1, 'Mwai Kibaki.');
+// trivia.set(2, 'Jomo Kenyatta.');
+// trivia.set(3, 'Daniel Moi.');
+// trivia.set(4, 'Uhuru Kenyatta.');
+// trivia.set('answer', 2);
+// trivia.set('correct', 'Congratulations. You are a pro!');
+// trivia.set('incorrect', 'Sorry. Please try again!');
+// console.log(trivia.get('question'));
+// for(let [key, value] of trivia.entries()){
+//     if(typeof(key) === 'number'){
+//         console.log(`${key}: ${value}`);
+//     }
+// }
+// let myAns = parseInt(prompt('Enter the correct answer:'));
+// if(myAns === trivia.get('answer')){
+//     console.log(trivia.get('correct'));
+// } else{
+//     console.log(trivia.get('incorrect'));
+// }
+
+let greet = false
+
+const now = new Promise((resolve, reject) => {
+    if(greet){
+        resolve('hello there babe')
+    } else{
+        reject('hello there babe');
     }
-}
-let myAns = parseInt(prompt('Enter the correct answer:'));
-if(myAns === trivia.get('answer')){
-    console.log(trivia.get('correct'));
-} else{
-    console.log(trivia.get('incorrect'));
-}
+}).then((message) => console.log('then:' + ' '+ message)).catch((message) => console.log('catch:' +' '+ message))
