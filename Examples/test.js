@@ -61,12 +61,24 @@ console.log(z); */
 //     console.log(trivia.get('incorrect'));
 // }
 
-let greet = false
+// let greet = false
 
-const now = new Promise((resolve, reject) => {
-    if(greet){
-        resolve('hello there babe')
+// const now = new Promise((resolve, reject) => {
+//     if(greet){
+//         resolve('hello there babe')
+//     } else{
+//         reject('hello there babe');
+//     }
+// }).then((message) => console.log('then:' + ' '+ message)).catch((message) => console.log('catch:' +' '+ message))
+
+
+let hi = new Promise((resolve, reject) => {
+    let x = 'hellohi'
+    let y = 'hellohi.';
+    if(x===y){
+        resolve('Perfect match')
     } else{
-        reject('hello there babe');
+        reject('No matches found');
     }
-}).then((message) => console.log('then:' + ' '+ message)).catch((message) => console.log('catch:' +' '+ message))
+})
+hi.then((message) => console.log('Success: ' + message)).catch((message) => console.log('Error: ' + message));
